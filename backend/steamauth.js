@@ -1,6 +1,6 @@
 var express = require('express'); // cjs
 var passport = require('passport');
-var session = require('express-session');
+var session = require('cookie-session');
 var util = require('util')
 var passportSteam = require('passport-steam');
 var cors = require('cors');
