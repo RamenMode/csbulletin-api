@@ -1,19 +1,21 @@
 var express = require('express'); // cjs
 var passport = require('passport');
-var session = require('cookie-session');
+var session = require('express-session'); // change to cookie session
 var util = require('util')
+const dotenv = require("dotenv")
+dotenv.config()
 var passportSteam = require('passport-steam');
 var cors = require('cors');
 var SteamStrategy = passportSteam.Strategy; // check this first
 // mod.cjs
 var fetch = require('node-fetch')
 // set up express app port
-var port = 4000;
+var port = process.env.PORT_AUTH
 
 // set up express app
 var app = express(); // check here 2nd, didn't set up views 
 app.use(cors({
-    origin: ["http://localhost:3000", "http://localhost:5500", "http://localhost:4000"],
+    origin: [process.env.BASE_URL_CLIENT + "3000", process.env.BASE_URL_API + process.env.PORT_DB, process.env.BASE_URL_API + process.env.PORT_AUTH],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true // bypass limitations of multiple ports
 }));
@@ -23,6 +25,7 @@ app.use(session({
     resave: true,
     name: 'name of session id'
 }))
+
 app.use(passport.initialize());
 app.use(passport.session());
 // check here third, didn't set up express.static
@@ -30,8 +33,8 @@ app.use(passport.session());
 
    // Initiate Strategy
 passport.use(new SteamStrategy({
-    returnURL: 'http://localhost:' + port + '/auth/steam/return',
-    realm: 'http://localhost:' + port + '/',
+    returnURL: process.env.BASE_URL_API + port + '/auth/steam/return',
+    realm: process.env.BASE_URL_API + port + '/',
     apiKey: 'BF24A5D4F82A65FC2AC391EDDB960C3D'
     }, function (identifier, profile, done) {
     process.nextTick(function () {
@@ -62,7 +65,7 @@ app.get('/displayinfo', ensureAuthenticated, function(req, res) {
 app.get('/logout', function(req, res){
     req.logout(function(err) {
         if (err) { return next(err); }
-        res.redirect('http://localhost:3000/');
+        res.redirect(process.env.BASE_URL_CLIENT + '3000/');
     });
 });
 
@@ -70,7 +73,7 @@ app.get('/auth/steam', passport.authenticate('steam', {failureRedirect: '/'}), f
     res.redirect('/')
 });
 app.get('/auth/steam/return', passport.authenticate('steam', {failureRedirect: '/'}), function (req, res) {
-    res.redirect('http://localhost:3000/')
+    res.redirect(process.env.BASE_URL_CLIENT + '3000/')
 });
 
 app.get('/user', (req, res) => { // not authenticated, if use passport.authenticate, it is still not authenticated

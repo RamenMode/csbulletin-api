@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 const express = require('express')
 const User = require('./models/User')
 var cors = require('cors')
+var fetch = require('node-fetch')
 // set up mongodb
 dotenv.config()
 const connectionString = `mongodb+srv://${process.env.REACT_APP_DB_USERNAME}:${process.env.REACT_APP_DB_PASSWORD}@csbulletin.gjbzahg.mongodb.net/Users?retryWrites=true&w=majority`
@@ -12,11 +13,11 @@ const client = new MongoClient(connectionString);
 var ObjectId = require('mongodb').ObjectId; 
 
 // set up server
-const port = process.env.PORT
+const port = process.env.PORT_DB
 const app = express()
 app.use(express.json())
 app.use(cors({
-  origin: ["http://localhost:3000", "http://localhost:5500", "http://localhost:4000"],
+  origin: [process.env.BASE_URL_CLIENT + "3000", process.env.BASE_URL_API + process.env.PORT_DB, process.env.BASE_URL_API + process.env.PORT_AUTH],
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true // bypass limitations of multiple ports
 }));
@@ -89,8 +90,8 @@ app.post('/getTradelink', async (req, res) => {
 app.post('/addTradelink', async (req, res) => {
   try {
     const {SteamID, Tradelink, ProfilePic} = req.body
-
-    let userExists = await fetch('http://localhost:5500/findUser', {
+    console.log('Test to see if the right endpoint is being hit', process.env.BASE_URL_API + process.env.PORT_DB + '/findUser')
+    let userExists = await fetch(process.env.BASE_URL_API + process.env.PORT_DB + '/findUser', {
       method: 'POST',
       credentials: 'include',
       headers: {
@@ -103,7 +104,7 @@ app.post('/addTradelink', async (req, res) => {
     .then(response => response.text())
   
     if (!userExists) { // edit here too
-      await fetch('http://localhost:5500/createUser', { // creates user in db
+      await fetch(process.env.BASE_URL_API + process.env.PORT_DB + '/createUser', { // creates user in db
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -217,7 +218,7 @@ app.post('/sendListingData', async (req, res) => {
   console.log(ToReceiveElementsText)
   console.log('here is my steam id:', UserSteamID)
   let flag = false
-  let userExists = await fetch('http://localhost:5500/findUser', {
+  let userExists = await fetch(process.env.BASE_URL_API + process.env.PORT_DB + '/findUser', {
     method: 'POST',
     credentials: 'include',
     headers: {
@@ -230,7 +231,7 @@ app.post('/sendListingData', async (req, res) => {
   .then(response => response.text())
   
   if (!userExists) { // edit here too
-    await fetch('http://localhost:5500/createUser', { // creates user in db
+    await fetch(process.env.BASE_URL_API + process.env.PORT_DB + '/createUser', { // creates user in db
       method: 'POST',
       credentials: 'include',
       headers: {
@@ -243,7 +244,7 @@ app.post('/sendListingData', async (req, res) => {
     })
     flag = true
   } 
-  let AddPost = await fetch('http://localhost:5500/addPost', { // add post - need to implement
+  let AddPost = await fetch(process.env.BASE_URL_API + process.env.PORT_DB + '/addPost', { // add post - need to implement
     method: 'POST',
     credentials: 'include',
     headers: {
