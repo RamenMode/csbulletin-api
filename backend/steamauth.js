@@ -25,7 +25,8 @@ var port = process.env.PORT_AUTH
 var app = express(); // check here 2nd, didn't set up views 
 app.use(express.json())
 app.use(cors({
-    origin: [process.env.BASE_URL_CLIENT + "3000", process.env.BASE_URL_API + process.env.PORT_AUTH],
+    //origin: [process.env.BASE_URL_CLIENT + "3000", process.env.BASE_URL_API + process.env.PORT_AUTH],
+    origin: ['https://cs-bulletin.onrender.com', 'https://www.csbullet.in', process.env.BASE_URL_API + process.env.PORT_AUTH, , 'www.csbullet.in', 'csbullet.in', 'https://csbullet.in', 'www.cs-bulletin.onrender.com', 'cs-bulletin.onrender.com', 'https://cs-bulletin-api.onrender.com', 'www.cs-bulletin-api.onrender.com', 'cs-bulletin.onrender.com'],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true // bypass limitations of multiple ports
 }));
@@ -44,8 +45,8 @@ app.use(passport.session());
 
    // Initiate Strategy
 passport.use(new SteamStrategy({
-    returnURL: process.env.BASE_URL_API + port + '/auth/steam/return',
-    realm: process.env.BASE_URL_API + port + '/',
+    returnURL: process.env.BASE_URL_API + '/auth/steam/return',
+    realm: process.env.BASE_URL_API + '/',
     apiKey: 'BF24A5D4F82A65FC2AC391EDDB960C3D'
     }, function (identifier, profile, done) {
     process.nextTick(function () {
@@ -77,7 +78,7 @@ app.get('/logout', function(req, res){
     req.logout(function(err) {
         if (err) { return next(err); }
         //res.redirect('https://www.csbullet.in');
-        res.redirect(process.env.BASE_URL_CLIENT + "3000")
+        res.redirect(process.env.BASE_URL_CLIENT)
     });
 });
 
@@ -86,7 +87,7 @@ app.get('/auth/steam', passport.authenticate('steam', {failureRedirect: '/'}), f
 });
 app.get('/auth/steam/return', passport.authenticate('steam', {failureRedirect: '/'}), function (req, res) {
     //res.redirect('https://www.csbullet.in')
-    res.redirect(process.env.BASE_URL_CLIENT + "3000")
+    res.redirect(process.env.BASE_URL_CLIENT)
 });
 
 app.get('/user', (req, res) => { // not authenticated, if use passport.authenticate, it is still not authenticated
@@ -191,8 +192,7 @@ app.get('/getAllListings', async (req, res) => {
   app.post('/addTradelink', async (req, res) => {
     try {
       const {SteamID, Tradelink, ProfilePic} = req.body
-      console.log('Test to see if the right endpoint is being hit', process.env.BASE_URL_API + process.env.PORT_AUTH + '/findUser')
-      let userExists = await fetch(process.env.BASE_URL_API + process.env.PORT_AUTH + '/findUser', {
+      let userExists = await fetch(process.env.BASE_URL_API + '/findUser', {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -205,7 +205,7 @@ app.get('/getAllListings', async (req, res) => {
       .then(response => response.text())
     
       if (!userExists) { // edit here too
-        await fetch(process.env.BASE_URL_API + process.env.PORT_AUTH + '/createUser', { // creates user in db
+        await fetch(process.env.BASE_URL_API + '/createUser', { // creates user in db
           method: 'POST',
           credentials: 'include',
           headers: {
@@ -319,7 +319,7 @@ app.get('/getAllListings', async (req, res) => {
     console.log(ToReceiveElementsText)
     console.log('here is my steam id:', UserSteamID)
     let flag = false
-    let userExists = await fetch(process.env.BASE_URL_API + process.env.PORT_AUTH + '/findUser', {
+    let userExists = await fetch(process.env.BASE_URL_API + '/findUser', {
       method: 'POST',
       credentials: 'include',
       headers: {
@@ -332,7 +332,7 @@ app.get('/getAllListings', async (req, res) => {
     .then(response => response.text())
     
     if (!userExists) { // edit here too
-      await fetch(process.env.BASE_URL_API + process.env.PORT_AUTH + '/createUser', { // creates user in db
+      await fetch(process.env.BASE_URL_API + '/createUser', { // creates user in db
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -345,7 +345,7 @@ app.get('/getAllListings', async (req, res) => {
       })
       flag = true
     } 
-    let AddPost = await fetch(process.env.BASE_URL_API + process.env.PORT_AUTH + '/addPost', { // add post - need to implement
+    let AddPost = await fetch(process.env.BASE_URL_API + '/addPost', { // add post - need to implement
       method: 'POST',
       credentials: 'include',
       headers: {
