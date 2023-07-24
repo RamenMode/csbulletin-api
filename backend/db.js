@@ -301,6 +301,10 @@ app.get('/deleteUser', async (req, res) => {
 app.get('/retrieveURL', (req, res) => {
   res.send(connectionString)
 })
+
+app.get('/testondb', (req, res) => {
+  res.send('testondb')
+})
 //run().catch(console.dir);
 
 // endpoints to check sendListingData
