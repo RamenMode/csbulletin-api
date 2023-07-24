@@ -96,7 +96,7 @@ function ensureAuthenticated(req, res, next) {
   res.redirect('/');
   
 }
-
+//
 app.get('/testso', (req, res) => {
     res.send('this endpoint is working')
 })
