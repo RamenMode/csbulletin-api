@@ -15,8 +15,7 @@ var port = process.env.PORT_AUTH
 // set up express app
 var app = express(); // check here 2nd, didn't set up views 
 app.use(cors({
-    //origin: [process.env.BASE_URL_CLIENT + "3000", process.env.BASE_URL_API + process.env.PORT_DB, process.env.BASE_URL_API + process.env.PORT_AUTH, , 'www.csbullet.in', 'https://cs-bulletin.onrender.com/', 'csbullet.in', 'https://csbullet.in', 'www.cs-bulletin.onrender.com', 'cs-bulletin.onrender.com', 'https://cs-bulletin-api.onrender.com', 'www.cs-bulletin-api.onrender.com', 'cs-bulletin.onrender.com'],
-    origin: "*",
+    origin: [process.env.BASE_URL_API + process.env.PORT_DB, process.env.BASE_URL_API + process.env.PORT_AUTH, , 'www.csbullet.in', 'https://www.csbullet.in', 'https://cs-bulletin.onrender.com', 'csbullet.in', 'https://csbullet.in', 'www.cs-bulletin.onrender.com', 'cs-bulletin.onrender.com', 'https://cs-bulletin-api.onrender.com', 'www.cs-bulletin-api.onrender.com', 'cs-bulletin.onrender.com'],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true // bypass limitations of multiple ports
 }));
@@ -66,7 +65,7 @@ app.get('/displayinfo', ensureAuthenticated, function(req, res) {
 app.get('/logout', function(req, res){
     req.logout(function(err) {
         if (err) { return next(err); }
-        res.redirect(process.env.BASE_URL_CLIENT + '3000/');
+        res.redirect('https://www.csbullet.in');
     });
 });
 
@@ -74,7 +73,7 @@ app.get('/auth/steam', passport.authenticate('steam', {failureRedirect: '/'}), f
     res.redirect('/')
 });
 app.get('/auth/steam/return', passport.authenticate('steam', {failureRedirect: '/'}), function (req, res) {
-    res.redirect(process.env.BASE_URL_CLIENT + '3000/')
+    res.redirect('https://www.csbullet.in')
 });
 
 app.get('/user', (req, res) => { // not authenticated, if use passport.authenticate, it is still not authenticated
