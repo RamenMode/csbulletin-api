@@ -77,8 +77,8 @@ app.get('/displayinfo', ensureAuthenticated, function(req, res) {
 app.get('/logout', function(req, res){
     req.logout(function(err) {
         if (err) { return next(err); }
-        //res.redirect('https://www.csbullet.in');
-        res.redirect(process.env.BASE_URL_CLIENT)
+        res.redirect('back');
+        //res.redirect(process.env.BASE_URL_CLIENT)
     });
 });
 
@@ -86,8 +86,8 @@ app.get('/auth/steam', passport.authenticate('steam', {failureRedirect: '/'}), f
     res.redirect('/')
 });
 app.get('/auth/steam/return', passport.authenticate('steam', {failureRedirect: '/'}), function (req, res) {
-    //res.redirect('https://www.csbullet.in')
-    res.redirect(process.env.BASE_URL_CLIENT)
+    res.redirect('back');
+    //res.redirect(process.env.BASE_URL_CLIENT)
 });
 
 app.get('/user', (req, res) => { // not authenticated, if use passport.authenticate, it is still not authenticated
@@ -95,7 +95,6 @@ app.get('/user', (req, res) => { // not authenticated, if use passport.authentic
         res.send(req.user)
     } else {
     res.send(false) } // if not authenticated user
-    //res.redirect('http://localhost:3000/')
 });
 
 app.get('/loggedin', (req, res) => {
