@@ -15,7 +15,8 @@ var port = process.env.PORT_AUTH
 // set up express app
 var app = express(); // check here 2nd, didn't set up views 
 app.use(cors({
-    origin: [process.env.BASE_URL_CLIENT + "3000", process.env.BASE_URL_API + process.env.PORT_DB, process.env.BASE_URL_API + process.env.PORT_AUTH, , 'www.csbullet.in', 'https://cs-bulletin.onrender.com/', 'csbullet.in', 'https://csbullet.in', 'www.cs-bulletin.onrender.com', 'cs-bulletin.onrender.com', 'https://cs-bulletin-api.onrender.com', 'www.cs-bulletin-api.onrender.com', 'cs-bulletin.onrender.com'],
+    //origin: [process.env.BASE_URL_CLIENT + "3000", process.env.BASE_URL_API + process.env.PORT_DB, process.env.BASE_URL_API + process.env.PORT_AUTH, , 'www.csbullet.in', 'https://cs-bulletin.onrender.com/', 'csbullet.in', 'https://csbullet.in', 'www.cs-bulletin.onrender.com', 'cs-bulletin.onrender.com', 'https://cs-bulletin-api.onrender.com', 'www.cs-bulletin-api.onrender.com', 'cs-bulletin.onrender.com'],
+    origin: "*",
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true // bypass limitations of multiple ports
 }));
@@ -95,6 +96,10 @@ function ensureAuthenticated(req, res, next) {
   res.redirect('/');
   
 }
+
+app.get('/testso', (req, res) => {
+    res.send('this endpoint is working')
+})
 
 app.get('/steamid', (req, res) => {
     res.send(req.user._json.steamid)
