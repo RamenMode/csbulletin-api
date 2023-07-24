@@ -16,8 +16,9 @@ var ObjectId = require('mongodb').ObjectId;
 const port = process.env.PORT_DB
 const app = express()
 app.use(express.json())
+console.log(process.env.BASE_URL_CLIENT + "3000", process.env.BASE_URL_API + process.env.PORT_DB, process.env.BASE_URL_API + process.env.PORT_AUTH)
 app.use(cors({
-  origin: [process.env.BASE_URL_CLIENT + "3000", process.env.BASE_URL_API + process.env.PORT_DB, process.env.BASE_URL_API + process.env.PORT_AUTH],
+  origin: [process.env.BASE_URL_CLIENT + "3000", process.env.BASE_URL_API + process.env.PORT_DB, process.env.BASE_URL_API + process.env.PORT_AUTH, , 'www.csbullet.in', 'https://cs-bulletin.onrender.com/', 'csbullet.in', 'https://csbullet.in', 'www.cs-bulletin.onrender.com', 'cs-bulletin.onrender.com', 'https://cs-bulletin-api.onrender.com', 'www.cs-bulletin-api.onrender.com', 'cs-bulletin.onrender.com'],
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true // bypass limitations of multiple ports
 }));
