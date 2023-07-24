@@ -18,8 +18,8 @@ const app = express()
 app.use(express.json())
 console.log(process.env.BASE_URL_CLIENT + "3000", process.env.BASE_URL_API + process.env.PORT_DB, process.env.BASE_URL_API + process.env.PORT_AUTH)
 app.use(cors({
-  origin: ['https://cs-bulletin.onrender.com', 'https://www.csbullet.in', process.env.BASE_URL_API + process.env.PORT_DB, process.env.BASE_URL_API + process.env.PORT_AUTH, , 'www.csbullet.in', 'csbullet.in', 'https://csbullet.in', 'www.cs-bulletin.onrender.com', 'cs-bulletin.onrender.com', 'https://cs-bulletin-api.onrender.com', 'www.cs-bulletin-api.onrender.com', 'cs-bulletin.onrender.com'],
-  origin: "*",
+  //origin: ['https://cs-bulletin.onrender.com', 'https://www.csbullet.in', process.env.BASE_URL_API + process.env.PORT_DB, process.env.BASE_URL_API + process.env.PORT_AUTH, , 'www.csbullet.in', 'csbullet.in', 'https://csbullet.in', 'www.cs-bulletin.onrender.com', 'cs-bulletin.onrender.com', 'https://cs-bulletin-api.onrender.com', 'www.cs-bulletin-api.onrender.com', 'cs-bulletin.onrender.com'],
+  origin: [process.env.BASE_URL_CLIENT + "3000", process.env.BASE_URL_API + process.env.PORT_DB, process.env.BASE_URL_API + process.env.PORT_AUTH],
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true // bypass limitations of multiple ports
 }));
@@ -34,19 +34,6 @@ mongoose.connect(connectionString)
     console.log(error)
   })
 // functions
-async function run() {
-  try {
-    const database = client.db('listingData');
-    const listings = database.collection('listings');
-    // Query for a movie that has the title 'Back to the Future'
-    const query = { _id: new ObjectId('64b210c45e721edc5a109e26') };
-    const listing = await listings.findOne(query);
-    console.log(listing);
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
-  }
-}
 
 app.get('/getAllListings', async (req, res) => {
   try {
