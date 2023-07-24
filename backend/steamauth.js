@@ -2,10 +2,10 @@
 const { MongoClient } = require("mongodb");
 const mongoose = require('mongoose')
 const User = require('./models/User')
-
+const session = require('cookie-session')
 var express = require('express'); // cjs
 var passport = require('passport');
-var session = require('express-session'); // change to cookie session
+//var session = require('express-session'); // change to cookie session
 var util = require('util')
 const dotenv = require("dotenv")
 dotenv.config()
@@ -31,10 +31,8 @@ app.use(cors({
     credentials: true // bypass limitations of multiple ports
 }));
 app.use(session({
-    secret: 'eyhowirngoi3ny4howrsaf',
-    saveUninitialized: true,
-    resave: true,
-    name: 'name of session id'
+    maxAge: 24*60*60*1000,
+    keys: ['ewrnoieqngqoi2hn4roiwb104y8fb']
 }))
 
 
@@ -77,8 +75,7 @@ app.get('/displayinfo', ensureAuthenticated, function(req, res) {
 app.get('/logout', function(req, res){
     req.logout(function(err) {
         if (err) { return next(err); }
-        res.redirect('back');
-        //res.redirect(process.env.BASE_URL_CLIENT)
+        res.redirect(process.env.BASE_URL_CLIENT)
     });
 });
 
@@ -86,8 +83,7 @@ app.get('/auth/steam', passport.authenticate('steam', {failureRedirect: '/'}), f
     res.redirect('/')
 });
 app.get('/auth/steam/return', passport.authenticate('steam', {failureRedirect: '/'}), function (req, res) {
-    res.redirect('back');
-    //res.redirect(process.env.BASE_URL_CLIENT)
+    res.redirect(process.env.BASE_URL_CLIENT)
 });
 
 app.get('/user', (req, res) => { // not authenticated, if use passport.authenticate, it is still not authenticated
