@@ -62,10 +62,15 @@ passport.deserializeUser((obj, done) => {
 });
 
 
+
 // Routes
-app.get('/', function (req, res) {
+/*app.get('/', function (req, res) {
     //res.send(req.user);
     res.send('thiwegorwhinhoei')
+});*/
+
+app.get('/', function(req, res){
+  res.render('index', { user: req.user });
 });
 
 app.get('/displayinfo', ensureAuthenticated, function(req, res) {
