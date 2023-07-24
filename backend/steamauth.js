@@ -75,15 +75,16 @@ app.get('/displayinfo', ensureAuthenticated, function(req, res) {
 app.get('/logout', function(req, res){
     req.logout(function(err) {
         if (err) { return next(err); }
-        res.redirect(process.env.BASE_URL_CLIENT)
+        res.redirect('/')
     });
 });
 
 app.get('/auth/steam', passport.authenticate('steam', {failureRedirect: '/'}), function (req, res) {
-    res.redirect('/')
+    //res.redirect('/')
 });
 app.get('/auth/steam/return', passport.authenticate('steam', {failureRedirect: '/'}), function (req, res) {
-    res.redirect(process.env.BASE_URL_CLIENT)
+    //res.redirect('process.env.BASE_URL_CLIENT')
+    res.redirect('/')
 });
 
 app.get('/user', (req, res) => { // not authenticated, if use passport.authenticate, it is still not authenticated

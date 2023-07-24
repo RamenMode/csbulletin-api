@@ -1,1 +1,2 @@
 1. Possibly seralize user id instead of entire user
+2. Configure strategies
