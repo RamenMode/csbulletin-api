@@ -64,7 +64,8 @@ passport.deserializeUser((obj, done) => {
 
 // Routes
 app.get('/', function (req, res) {
-    res.send(req.user);
+    //res.send(req.user);
+    res.send('thiwegorwhinhoei')
 });
 
 app.get('/displayinfo', ensureAuthenticated, function(req, res) {
