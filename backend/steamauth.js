@@ -74,6 +74,7 @@ app.get('/displayinfo', ensureAuthenticated, function(req, res) {
 });
 
 app.get('/logout', function(req, res){
+    req.session = null
     req.logout(function(err) {
         if (err) { return next(err); }
         res.redirect(process.env.BASE_URL_CLIENT)
