@@ -76,14 +76,13 @@ app.get('/displayinfo', ensureAuthenticated, function(req, res) {
 app.get('/logout', function(req, res){
   
     req.logout()
-    req.session.destroy(function (err) {
+    /*req.session.destroy(function (err) {
       if (!err) {
           res.status(200).clearCookie('connect.sid', {path: '/'}).json({status: "Success"});
       } else {
           res.status(400).send('something went wrong')
       }
-
-    });
+    });*/
     /*
     req.logout(function(err) {
         if (err) { return next(err); }
