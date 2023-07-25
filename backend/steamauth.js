@@ -32,7 +32,10 @@ app.use(cors({
 }));
 app.use(session({
     maxAge: 24*60*60*1000,
-    keys: ['ewrnoieqngqoi2hn4roiwb104y8fb']
+    keys: ['ewrnoieqngqoi2hn4roiwb104y8fb'],
+    sameSite: 'none',
+    secure: 'true',
+    domain: '.onrender.com'
 }))
 
 
