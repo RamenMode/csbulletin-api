@@ -75,9 +75,11 @@ app.get('/displayinfo', ensureAuthenticated, function(req, res) {
 
 app.get('/logout', function(req, res){
   
-    req.logout(function(err) {
-      res.redirect(process.env.BASE_URL_CLIENT)
-    })
+  //req.logout();
+  req.session = null;
+  res.redirect(process.env.BASE_URL_CLIENT)
+  //await res.clearCookie(process.env.PROJECT_TITLE.toLowerCase());
+  //await res.clearCookie(`${process.env.PROJECT_TITLE.toLowerCase()}.sig`);
     /*req.session.destroy(function (err) {
       if (!err) {
           res.status(200).clearCookie('connect.sid', {path: '/'}).json({status: "Success"});
