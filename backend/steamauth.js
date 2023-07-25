@@ -26,13 +26,14 @@ var app = express(); // check here 2nd, didn't set up views
 app.use(express.json())
 app.use(cors({
     //origin: [process.env.BASE_URL_CLIENT + "3000", process.env.BASE_URL_API + process.env.PORT_AUTH],
-    origin: ['https://cs-bulletin.onrender.com', 'https://www.csbullet.in', process.env.BASE_URL_API + process.env.PORT_AUTH, , 'www.csbullet.in', 'csbullet.in', 'https://csbullet.in', 'www.cs-bulletin.onrender.com', 'cs-bulletin.onrender.com', 'https://cs-bulletin-api.onrender.com', 'www.cs-bulletin-api.onrender.com', 'cs-bulletin.onrender.com'],
+    origin: ['https://cs-bulletin.onrender.com', 'api.csbullet.in', 'https://www.csbullet.in', process.env.BASE_URL_API + process.env.PORT_AUTH, , 'www.csbullet.in', 'csbullet.in', 'https://csbullet.in', 'www.cs-bulletin.onrender.com', 'cs-bulletin.onrender.com', 'https://cs-bulletin-api.onrender.com', 'www.cs-bulletin-api.onrender.com', 'cs-bulletin.onrender.com'],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true // bypass limitations of multiple ports
 }));
 app.use(session({
     maxAge: 24*60*60*1000,
-    keys: ['ewrnoieqngqoi2hn4roiwb104y8fb']
+    keys: ['ewrnoieqngqoi2hn4roiwb104y8fb'],
+    domain: 'csbullet.in'
 }))
 
 
