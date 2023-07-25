@@ -74,11 +74,21 @@ app.get('/displayinfo', ensureAuthenticated, function(req, res) {
 });
 
 app.get('/logout', function(req, res){
-    req.session = null
+  
+    req.logout()
+    req.session.destroy(function (err) {
+      if (!err) {
+          res.status(200).clearCookie('connect.sid', {path: '/'}).json({status: "Success"});
+      } else {
+          res.status(400).send('something went wrong')
+      }
+
+    });
+    /*
     req.logout(function(err) {
         if (err) { return next(err); }
         res.redirect(process.env.BASE_URL_CLIENT)
-    });
+    });*/
 });
 
 app.get('/auth/steam', passport.authenticate('steam', {failureRedirect: '/'}), function (req, res) {
