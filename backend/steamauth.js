@@ -35,7 +35,7 @@ app.use(session({
     keys: ['ewrnoieqngqoi2hn4roiwb104y8fb'],
     sameSite: 'none',
     secure: 'true',
-    domain: '.onrender.com'
+    domain: 'cs-bulletin-api.onrender.com'
 }))
 
 
