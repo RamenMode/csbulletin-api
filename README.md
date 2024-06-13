@@ -2,3 +2,5 @@
 Note: This repository is no longer updated. This is mostly a demo project's backend utilizing a NoSQL database along with a Express.js and Node.js environment. 
 
 Author: Kevin Xue, July 2023
+
+Made public: Jun 2024
